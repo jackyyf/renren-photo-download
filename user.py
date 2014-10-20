@@ -52,13 +52,8 @@ def get_sid(username, password):
         br.form = i
         break
     html = resp.read()
-    url = re.search(r'\/rndimg_wap[^"]*"', html).group(0)[:-1]
-    checkcode = requests.get("http://3g.renren.com" + url).content
-    img = Image.open(StringIO(checkcode))
-    img.show()
     br['email'] = username
     br['password'] = password
-    br['verifycode'] = raw_input(u'请输入验证码：')
     res = br.submit()
     if 'sid' in res.geturl():
         return (True, re.search('sid=([^?&]*)', res.geturl()).group(1))
